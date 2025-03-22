@@ -1,6 +1,6 @@
 -- Passe Partout
 SMODS.Joker {
-    key= "passe-partout",
+    key= "passe_partout",
     atlas = "placeholder",
     pos = { x = 0, y = 0},
     rarity = 2,
@@ -96,7 +96,7 @@ end
 
 -- Golden Idol
 SMODS.Joker {
-    key= "golden-idol",
+    key= "golden_idol",
     atlas = "uncommons",
     pos = { x = 0, y = 0},
     rarity = 2,
@@ -132,6 +132,50 @@ SMODS.Joker {
             message = localize('k_val_up'),
             colour = G.C.MONEY
         }
+        end
+  
+  
+  
+    end
+  }
+
+  function existsInTable(card, scored)
+    for k, v in ipairs(scored) do
+        if card == v then
+            -- scoring
+            return true
+        end
+    end
+    return false
+end
+
+-- World Cracker
+SMODS.Joker {
+    key= "world_cracker",
+    atlas = "placeholder",
+    pos = { x = 0, y = 0},
+    rarity = 2,
+    unlocked = true,
+    discovered = true,
+    cost = 1,
+    loc_txt = {
+        name = "World Cracker",
+        text = {
+            "Lower the level of the first",
+            "played {C:attention}poker hand{} each round",
+            "Lowering the level of a {C:attention}poker hand{}",
+            "gives {C:money}$#1#{}" 
+        }
+    },
+    config = { extra = { reward = 7 } },
+    loc_vars = function(self, info_queue, card)
+            return { vars = { card.ability.extra.reward } }
+        end,
+    calculate = function(self, card, context)
+        if context.before and G.GAME.current_round.hands_played == 0 then
+            if G.GAME.hands[context.scoring_name].level > 1 then
+                level_up_hand(card, context.scoring_name, nil, -1)
+            end
         end
   
   

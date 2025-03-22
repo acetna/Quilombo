@@ -1,6 +1,6 @@
 --Cosmic Ray
 SMODS.Joker {
-    key= "cosmic-ray",
+    key= "cosmic_ray",
     atlas = "placeholder",
     pos = { x = 0, y = 0},
     rarity = 1,
@@ -11,9 +11,6 @@ SMODS.Joker {
     loc_txt = {
         name = "Cosmic Ray",
         text = {
-            --"{C:green}#1# in #2#{} chance to upgrade level of",
-            --"a random {C:attention}poker hand{} when playing", 
-            --"any hand",
             "Every hand played has",
             "a {C:green}#1# in #2#{} chance to upgrade",
             "a random {C:attention}poker hand{}"

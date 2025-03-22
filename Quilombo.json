@@ -1,0 +1,16 @@
+{
+	"id": "quilombo",
+	"name": "Quilombo",
+	"display_name": "Quilombo",
+	"author": ["acetna"],
+	"description": "Just sort of whatever I want to add while learning lua",
+	"prefix": "qui",
+	"main_file": "quilombo.lua",
+	"priority": 10,
+	"badge_colour": "3e4b4d",
+	"badge_text_colour": "dd463c",
+	"version": "1.0.0",
+	"dependencies": [
+		"Steamodded"
+	]
+}
