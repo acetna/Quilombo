@@ -1,7 +1,7 @@
 -- Passe Partout
 SMODS.Joker {
     key= "passe-partout",
-    atlas = "uncommons",
+    atlas = "placeholder",
     pos = { x = 0, y = 0},
     rarity = 2,
     unlocked = true,
@@ -94,3 +94,47 @@ function existsInTable(card, scored)
     return false
 end
 
+-- Golden Idol
+SMODS.Joker {
+    key= "golden-idol",
+    atlas = "uncommons",
+    pos = { x = 0, y = 0},
+    rarity = 2,
+    unlocked = true,
+    discovered = true,
+    blueprint_compat = true,
+    cost = 1,
+    eternal_compat = false,
+    rental_compat = false,
+    loc_txt = {
+        name = "Golden Idol",
+        text = {
+            "{X:mult,C:white}X#1#{} Mult",
+            "Gains {C:money}$#2#{} of sell value at end",
+            "of round"  
+        }
+    },
+    config = { extra = { X = 0.25 , moolah = 25} },
+    loc_vars = function(self, info_queue, card)
+            return { vars = { card.ability.extra.X , card.ability.extra.moolah } }
+        end,
+    calculate = function(self, card, context)
+       if context.joker_main then
+        return {
+            Xmult = card.ability.extra.X,
+        }
+        end
+  
+        if context.end_of_round and context.cardarea == G.jokers and not context.blueprint then
+          card.ability.extra_value = card.ability.extra_value + card.ability.extra.moolah
+          card:set_cost()
+          return {
+            message = localize('k_val_up'),
+            colour = G.C.MONEY
+        }
+        end
+  
+  
+  
+    end
+  }

@@ -151,7 +151,7 @@ SMODS.Joker {
   key= "golden-idol",
   atlas = "uncommons",
   pos = { x = 0, y = 0},
-  rarity = 3,
+  rarity = 2,
   unlocked = true,
   discovered = true,
   blueprint_compat = true,
@@ -186,6 +186,44 @@ SMODS.Joker {
       }
       end
 
+
+
+  end
+}
+
+-- I think this idea is sick, but there are only 4 decaying food jokers on the base game, so it might be limited in use, might change it to uncommon, might just never finish it who knows
+--Fine Wine
+
+SMODS.Joker {
+  key= "fine-wine",
+  atlas = "placeholder",
+  pos = { x = 0, y = 0},
+  rarity = 3,
+  unlocked = true,
+  discovered = true,
+  blueprint_compat = false,
+  cost = 8,
+  loc_txt = {
+      name = "Fine Wine",
+      text = {
+          "{C:attention}Food Jokers{} grow",
+          "instead of decaying"  
+      }
+  },
+  config = { extra = { 
+    foodJokers = {
+    --"Gros Michel",
+    --"Cavendish",
+    "Ice Cream",
+    "Turtle Bean",
+    --"Diet Cola",
+    "Popcorn",
+    "Ramen",
+  } } },
+  loc_vars = function(self, info_queue, card)
+          return { vars = {} }
+      end,
+  calculate = function(self, card, context)
 
 
   end

@@ -1,7 +1,7 @@
 --Cosmic Ray
 SMODS.Joker {
     key= "cosmic-ray",
-    atlas = "uncommons",
+    atlas = "placeholder",
     pos = { x = 0, y = 0},
     rarity = 1,
     unlocked = true,
