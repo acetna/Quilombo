@@ -7,7 +7,7 @@ SMODS.Joker {
     unlocked = true,
     discovered = true,
     blueprint_compat = true,
-    cost = 6,
+    cost = 5,
     loc_txt = {
         name = "Passe Partout",
         text = {
@@ -157,14 +157,14 @@ SMODS.Joker {
     rarity = 2,
     unlocked = true,
     discovered = true,
-    cost = 1,
+    cost = 7,
     loc_txt = {
         name = "World Cracker",
         text = {
             "Lower the level of the first",
             "played {C:attention}poker hand{} each round",
-            "Lowering the level of a {C:attention}poker hand{}",
-            "gives {C:money}$#1#{}" 
+            "Lowering the level of a",
+            "{C:attention}poker hand{} gives {C:money}$#1#{}" 
         }
     },
     config = { extra = { reward = 7 } },

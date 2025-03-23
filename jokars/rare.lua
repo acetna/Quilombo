@@ -4,8 +4,6 @@ SMODS.Joker {
 	loc_txt = {
 		name = 'Faustian Bargain',
 		text = {
-			--"Each {C:attention}6{} in your {C:attention}full deck{}", 
-      --"gives {X:mult,C:white}X#1#{} Mult.",
       "This joker's {X:mult,C:white}X{} Mult is multiplied",
       "by {X:mult,C:white}X#1#{} for every {C:attention}6{} in your {C:attention}full deck{}",
       "If your hand ever contains exactly",
@@ -85,7 +83,6 @@ SMODS.Joker {
             blocking = false,
             blockable = false,
             func = function()
-              sendInfoMessage("NOW","faust")
               for i = 1, #G.hand.cards do
                 if G.hand.cards[i]:get_id() == 6 then 
                   card.ability.extra.handSixes[#card.ability.extra.handSixes + 1] = G.hand.cards[i]
@@ -133,7 +130,6 @@ function claimSoul(card)
     doomedCards[#doomedCards + 1] = G.hand.cards[i]
   end
 
-  local _first_dissolve = false
   G.E_MANAGER:add_event(Event({
             trigger = "after",
             delay = 2.5,
@@ -146,18 +142,18 @@ function claimSoul(card)
             end}))
   end
   
--- I think this idea is very cool, but there are only 4 decaying food jokers on the base game, so it might be limited in use, might change it to uncommon, might just never finish it who knows
+-- I think this idea is very cool, but there are only 4 decaying food jokers on the base game, so it might be limited in use, might change it to uncommon
 --Fine Wine
 
 SMODS.Joker {
   key= "fine_wine",
-  atlas = "placeholder",
-  pos = { x = 0, y = 0},
+  atlas = "rares",
+  pos = { x = 2, y = 0},
   rarity = 3,
   unlocked = true,
   discovered = true,
   blueprint_compat = false,
-  cost = 8,
+  cost = 7,
   loc_txt = {
       name = "Fine Wine",
       text = {
@@ -171,6 +167,7 @@ SMODS.Joker {
     --"Cavendish",
     "Ice Cream",
     "Turtle Bean",
+    "Seltzer",
     --"Diet Cola",
     "Popcorn",
     "Ramen",

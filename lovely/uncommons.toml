@@ -1,0 +1,309 @@
+[manifest]
+version = "1.0.0"
+priority = 0
+
+#World Cracker
+[[patches]]
+[patches.pattern]
+target = "functions/common_events.lua"
+pattern = '''
+G.GAME.hands[hand].chips = math.max(G.GAME.hands[hand].s_chips + G.GAME.hands[hand].l_chips*(G.GAME.hands[hand].level - 1), 0)'''
+position = "after"
+payload = '''
+    if amount < 0 and #find_joker("j_qui_world_cracker") > 0 then
+        local card = find_joker("j_qui_world_cracker")
+        for i = 1, #card do
+            G.E_MANAGER:add_event(Event({blockable = false, blocking = false, func = function()
+                card_eval_status_text(card[i], 'extra', nil, nil, nil, {message = "KA-ching!"})
+                return true
+            end}))
+            G.E_MANAGER:add_event(Event({trigger = "after", delay = 11 + i, blockable = false, blocking = false, func = function()
+                ease_dollars(card[i].ability.extra.reward, true)
+                return true
+            end}))
+        end
+    end'''
+match_indent = false
+times = 1
+
+#Fine Wine
+
+#ice cream
+[[patches]]
+[patches.pattern]
+target = "card.lua"
+pattern = '''
+        if self.ability.extra.chips - self.ability.extra.chip_mod <= 0 then 
+        G.E_MANAGER:add_event(Event({
+            func = function()
+                play_sound('tarot1')
+                self.T.r = -0.2
+                self:juice_up(0.3, 0.4)
+                self.states.drag.is = true
+                self.children.center.pinch.x = true
+                G.E_MANAGER:add_event(Event({trigger = 'after', delay = 0.3, blockable = false,
+                    func = function()
+                            G.jokers:remove_card(self)
+                            self:remove()
+                            self = nil
+                        return true; end})) 
+                return true
+            end
+        })) 
+        return {
+            message = localize('k_melted_ex'),
+            colour = G.C.CHIPS
+        }'''
+position = "at"
+payload = '''
+       if #find_joker("j_qui_fine_wine") > 0 then
+            self.ability.extra.chips = self.ability.extra.chips + self.ability.extra.chip_mod
+            return {
+                message = "+"..tostring(self.ability.extra.chip_mod),
+                colour = G.C.PURPLE
+            }
+        elseif self.ability.extra.chips - self.ability.extra.chip_mod <= 0 then 
+            G.E_MANAGER:add_event(Event({
+                func = function()
+                    play_sound('tarot1')
+                    self.T.r = -0.2
+                    self:juice_up(0.3, 0.4)
+                    self.states.drag.is = true
+                    self.children.center.pinch.x = true
+                    G.E_MANAGER:add_event(Event({trigger = 'after', delay = 0.3, blockable = false,
+                        func = function()
+                                G.jokers:remove_card(self)
+                                self:remove()
+                                self = nil
+                            return true; end})) 
+                    return true
+                end
+            })) 
+            return {
+                message = localize('k_melted_ex'),
+                colour = G.C.CHIPS
+            }'''
+match_indent = false
+times = 1
+
+#Popcorn
+[[patches]]
+[patches.pattern]
+target = "card.lua"
+pattern = '''
+    if self.ability.mult - self.ability.extra <= 0 then 
+        G.E_MANAGER:add_event(Event({
+            func = function()
+                play_sound('tarot1')
+                self.T.r = -0.2
+                self:juice_up(0.3, 0.4)
+                self.states.drag.is = true
+                self.children.center.pinch.x = true
+                G.E_MANAGER:add_event(Event({trigger = 'after', delay = 0.3, blockable = false,
+                    func = function()
+                            G.jokers:remove_card(self)
+                            self:remove()
+                            self = nil
+                        return true; end})) 
+                return true
+            end
+        })) 
+        return {
+            message = localize('k_eaten_ex'),
+            colour = G.C.RED
+        }'''
+position = "at"
+payload = '''
+    if #find_joker("j_qui_fine_wine") > 0 then
+        self.ability.mult = self.ability.mult + self.ability.extra
+        return {
+            message = "+"..tostring(self.ability.extra),
+            colour = G.C.PURPLE
+        }
+    elseif self.ability.mult - self.ability.extra <= 0 then 
+        G.E_MANAGER:add_event(Event({
+            func = function()
+                play_sound('tarot1')
+                self.T.r = -0.2
+                self:juice_up(0.3, 0.4)
+                self.states.drag.is = true
+                self.children.center.pinch.x = true
+                G.E_MANAGER:add_event(Event({trigger = 'after', delay = 0.3, blockable = false,
+                    func = function()
+                            G.jokers:remove_card(self)
+                            self:remove()
+                            self = nil
+                        return true; end})) 
+                return true
+            end
+        })) 
+        return {
+            message = localize('k_eaten_ex'),
+            colour = G.C.RED
+        }'''
+match_indent = false
+times = 1
+
+#Seltzer
+[[patches]]
+[patches.pattern]
+target = "card.lua"
+pattern = '''
+if self.ability.extra - 1 <= 0 then 
+        G.E_MANAGER:add_event(Event({
+            func = function()
+                play_sound('tarot1')
+                self.T.r = -0.2
+                self:juice_up(0.3, 0.4)
+                self.states.drag.is = true
+                self.children.center.pinch.x = true
+                G.E_MANAGER:add_event(Event({trigger = 'after', delay = 0.3, blockable = false,
+                    func = function()
+                            G.jokers:remove_card(self)
+                            self:remove()
+                            self = nil
+                        return true; end})) 
+                return true
+            end
+        }))
+        return {
+            message = localize('k_drank_ex'),
+            colour = G.C.FILTER
+        } '''
+position = "at"
+payload = '''
+if #find_joker("j_qui_fine_wine") > 0 then
+    self.ability.extra = self.ability.extra + 1
+    return {
+        message = self.ability.extra..'',
+        colour = G.C.PURPLE
+    }
+elseif self.ability.extra - 1 <= 0 then 
+        G.E_MANAGER:add_event(Event({
+            func = function()
+                play_sound('tarot1')
+                self.T.r = -0.2
+                self:juice_up(0.3, 0.4)
+                self.states.drag.is = true
+                self.children.center.pinch.x = true
+                G.E_MANAGER:add_event(Event({trigger = 'after', delay = 0.3, blockable = false,
+                    func = function()
+                            G.jokers:remove_card(self)
+                            self:remove()
+                            self = nil
+                        return true; end})) 
+                return true
+            end
+        }))
+        return {
+            message = localize('k_drank_ex'),
+            colour = G.C.FILTER
+        }'''
+match_indent = false
+times = 1
+
+#Turtle Bean (might be too good)
+[[patches]]
+[patches.pattern]
+target = "card.lua"
+pattern = '''
+if self.ability.name == 'Turtle Bean' and not context.blueprint then
+                    if self.ability.extra.h_size - self.ability.extra.h_mod <= 0 then 
+                        G.E_MANAGER:add_event(Event({
+                            func = function()
+                                play_sound('tarot1')
+                                self.T.r = -0.2
+                                self:juice_up(0.3, 0.4)
+                                self.states.drag.is = true
+                                self.children.center.pinch.x = true
+                                G.E_MANAGER:add_event(Event({trigger = 'after', delay = 0.3, blockable = false,
+                                    func = function()
+                                            G.jokers:remove_card(self)
+                                            self:remove()
+                                            self = nil
+                                        return true; end})) 
+                                return true
+                            end
+                        }))'''
+position = "at"
+payload = '''
+if self.ability.name == 'Turtle Bean' and not context.blueprint then
+    if #find_joker("j_qui_fine_wine") > 0 then
+        self.ability.extra.h_size = self.ability.extra.h_size + self.ability.extra.h_mod
+        G.hand:change_size(self.ability.extra.h_mod)
+        return {
+            message = localize{type='variable',key='a_handsize',vars={self.ability.extra.h_mod}},
+            colour = G.C.PURPLE
+        }
+    elseif self.ability.extra.h_size - self.ability.extra.h_mod <= 0 then 
+        G.E_MANAGER:add_event(Event({
+        func = function()
+            play_sound('tarot1')
+            self.T.r = -0.2
+            self:juice_up(0.3, 0.4)
+            self.states.drag.is = true
+            self.children.center.pinch.x = true
+            G.E_MANAGER:add_event(Event({trigger = 'after', delay = 0.3, blockable = false,
+                func = function()
+                    G.jokers:remove_card(self)
+                        self:remove()
+                        self = nil
+                        return true; end})) 
+                return true
+            end
+        }))    '''
+match_indent = false
+times = 1
+
+#Ramen
+[[patches]]
+[patches.pattern]
+target = "card.lua"
+pattern = '''
+if self.ability.name == 'Ramen' and not context.blueprint then
+    if self.ability.x_mult - self.ability.extra <= 1 then
+        G.E_MANAGER:add_event(Event({
+            func = function()
+                play_sound('tarot1')
+                self.T.r = -0.2
+                self:juice_up(0.3, 0.4)
+                self.states.drag.is = true
+                self.children.center.pinch.x = true
+                G.E_MANAGER:add_event(Event({trigger = 'after', delay = 0.3, blockable = false,
+                    func = function()
+                            G.jokers:remove_card(self)
+                            self:remove()
+                            self = nil
+                        return true; end}))
+                return true
+            end
+        }))'''
+position = "at"
+payload = '''
+if self.ability.name == 'Ramen' and not context.blueprint then
+    if #find_joker("j_qui_fine_wine") > 0 then
+        self.ability.x_mult = self.ability.x_mult + self.ability.extra
+        return {
+            delay = 0.2,
+            message = "+X"..tostring(self.ability.extra).." mult",
+            colour = G.C.PURPLE
+        }
+    elseif self.ability.x_mult - self.ability.extra <= 1 then
+        G.E_MANAGER:add_event(Event({
+            func = function()
+                play_sound('tarot1')
+                self.T.r = -0.2
+                self:juice_up(0.3, 0.4)
+                self.states.drag.is = true
+                self.children.center.pinch.x = true
+                G.E_MANAGER:add_event(Event({trigger = 'after', delay = 0.3, blockable = false,
+                    func = function()
+                            G.jokers:remove_card(self)
+                            self:remove()
+                            self = nil
+                        return true; end}))
+                return true
+            end
+        }))'''
+match_indent = false
+times = 1
