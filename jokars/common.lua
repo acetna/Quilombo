@@ -1,7 +1,7 @@
---Cosmic Ray
+--Stargazer Joker
 SMODS.Joker {
-    key= "cosmic_ray",
-    atlas = "placeholder",
+    key= "daydreamer",
+    atlas = "commons",
     pos = { x = 0, y = 0},
     rarity = 1,
     unlocked = true,
@@ -9,9 +9,9 @@ SMODS.Joker {
     blueprint_compat = true,
     cost = 3,
     loc_txt = {
-        name = "Cosmic Ray",
+        name = "Daydreamer",
         text = {
-            "Every hand played has",
+            "Every played hand has",
             "a {C:green}#1# in #2#{} chance to upgrade",
             "a random {C:attention}poker hand{}"
         }
