@@ -9,7 +9,19 @@ I do plan to keep adding things to the mod over time, probably in bunches of lik
 # Additions
 7 whole Jokers!!
 
-
 ![image](https://github.com/user-attachments/assets/dc8740d0-cc63-472a-ade2-55a5affeab09)
+<details>
+    <summary>Spoiler warning!</summary>
+  
+    Faustian Bargain | This Joker's Xmult is multiplied by X1.5 for every 6 in your full deck. If your hand ever contains three 6s, YOU LOSE 
+    Fine Wine        | Food Jokers grow instead of decaying 
+    Prosopagnosia    | All face cards count as Kings, Queens and Jacks 
+    Golden Idol      | x0.25 Mult, Gains $25 sell value every round 
+    World Cutter     | Lowers the level of first played poker hand each round. Lowering the level of a poker hand gives $7 
+    Daydreamer       | Every played hand has a 1 in 4 chance to upgrade a random poker hand 
+    Sleepy Joker     | Gains a tenth of the chips of every scoring card. Playing cards don't give any chips 
+    
+</details>
+
 # Name
 Quilombo is an argentinian spanish word meaning very disorganized/big mess
