@@ -4,7 +4,7 @@ Balatro really inspired me to actually try my hand at game development, but for 
 
 Before this I had 0 experience in coding, and very little in making pixel art (A very basic TBoI texture mod nine years ago), and this whole mod was made in the last 2 weeks so any feedback is very appreciated.
 
-I do plan to keep adding things to the mod over time, probably in bunches of like 5ish.
+I do plan to keep adding things to the mod over time, probably in bunches
 
 # Additions
 7 whole Jokers!!
