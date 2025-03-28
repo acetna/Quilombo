@@ -9,5 +9,7 @@ I do plan to keep adding things to the mod over time, probably in bunches of lik
 # Additions
 7 whole Jokers!!
 
+
+![image](https://github.com/user-attachments/assets/dc8740d0-cc63-472a-ade2-55a5affeab09)
 # Name
 Quilombo is an argentinian spanish word meaning very disorganized/big mess
