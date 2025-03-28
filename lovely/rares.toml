@@ -1,0 +1,88 @@
+[manifest]
+version = "1.0.0"
+priority = -1
+
+#adding my own function to card.lua to change the way checking for cards works (for prosopagnosia)
+[[patches]]
+[patches.pattern]
+target = "card.lua"
+pattern = '''
+    return self.base.id
+end
+'''
+position = "after"
+payload = '''
+function qui_func_is_id(card, id)
+    if card.debuff then return false end
+    
+    if card:is_face() and next(find_joker("j_qui_prosopagnosia"))
+        and (id == 11 
+        or id == 12 
+        or id == 13) then 
+            return true end
+
+    if card:get_id() == id then return true end
+    return false
+end
+'''
+match_indent = false
+times = 1
+
+#replacement of all relevant get_id() == something to my own function
+[[patches]]
+[patches.regex]
+target = "card.lua"
+pattern = '''(?<indent>[\t ]*)context\.other_card:get_id\(\) == ([^\s\)]+)'''
+position = "at"
+line_prepend = '$indent'
+payload = '''
+qui_func_is_id(context.other_card, $2)
+'''
+times = 22
+
+#this handles the poker hand selection, so you can make five of a kinds with any combination of face cards
+[[patches]]
+[patches.pattern]
+target = "functions/misc_functions.lua"
+pattern = '''
+  for i=#hand, 1, -1 do
+    local curr = {}
+    table.insert(curr, hand[i])
+    for j=1, #hand do
+      if hand[i]:get_id() == hand[j]:get_id() and i ~= j then
+        table.insert(curr, hand[j])
+      end
+    end
+'''
+position = "at"
+payload = '''
+    for i=#hand, 1, -1 do
+      local curr = {}
+      table.insert(curr, hand[i])
+      for j=1, #hand do
+        if hand[i]:is_face() and hand[j]:is_face() and i ~= j and next(find_joker("j_qui_prosopagnosia")) then
+            table.insert(curr, hand[j])
+        elseif hand[i]:get_id() == hand[j]:get_id() and i ~= j then
+          table.insert(curr, hand[j])
+        end
+      end
+'''
+match_indent = false
+times = 1
+
+[[patches]]
+[patches.pattern]
+target = "functions/misc_functions.lua"
+pattern = '''
+vals[curr[1]:get_id()] = curr
+'''
+position = "at"
+payload = '''
+        if next(find_joker("j_qui_prosopagnosia")) and curr[1]:is_face() then
+            vals[13] = curr
+        else
+            vals[curr[1]:get_id()] = curr
+        end
+'''
+match_indent = false
+times = 1

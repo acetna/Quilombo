@@ -21,7 +21,7 @@ SMODS.Joker {
 	atlas = 'rares',
 	pos = { x = 0, y = 0 },
   soul_pos = { x = 1, y = 0},
-	cost = 8,
+	cost = 9,
   unlocked = true,
   discovered = true,
   blueprint_compat = true,
@@ -153,7 +153,7 @@ SMODS.Joker {
   unlocked = true,
   discovered = true,
   blueprint_compat = false,
-  cost = 7,
+  cost = 8,
   loc_txt = {
       name = "Fine Wine",
       text = {
@@ -177,6 +177,32 @@ SMODS.Joker {
       end,
   calculate = function(self, card, context)
 
+
+  end
+}
+
+-- prosopagnosia
+SMODS.Joker {
+  key= "prosopagnosia",
+  atlas = "rares",
+  pos = { x = 3, y = 0},
+  rarity = 3,
+  unlocked = true,
+  discovered = true,
+  blueprint_compat = false,
+  cost = 10,
+  loc_txt = {
+      name = "Prosopagnosia",
+      text = {
+          "All {C:attention}face{} cards count as {C:attention}Kings{},",
+          "{C:attention}Queens{} and {C:attention}Jacks{}"  
+      }
+  },
+  config = { extra = { { } } },
+  loc_vars = function(self, info_queue, card)
+          return { vars = {} }
+      end,
+  calculate = function(self, card, context)
 
   end
 }

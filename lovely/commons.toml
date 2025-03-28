@@ -1,0 +1,27 @@
+[manifest]
+version = "1.0.0"
+priority = 0
+
+#Sleepy Joker
+[[patches]]
+[patches.pattern]
+target = "card.lua"
+pattern = '''
+function Card:get_chip_bonus()
+'''
+position = "after"
+payload = '''
+if #find_joker("j_qui_sleepy_joker") > 0 and not self.debuff then
+    local melatonin = find_joker("j_qui_sleepy_joker")
+    for i = 1, #melatonin do
+        if self.ability.effect == 'Stone Card' then
+            melatonin[i].ability.extra.chiptotal = melatonin[i].ability.extra.chiptotal + (self.ability.bonus + (self.ability.perma_bonus or 0))/10
+        else
+            melatonin[i].ability.extra.chiptotal = melatonin[i].ability.extra.chiptotal + (self.base.nominal + self.ability.bonus + (self.ability.perma_bonus or 0))/10
+        end
+    end
+    return 0 
+end
+'''
+match_indent = false
+times = 1

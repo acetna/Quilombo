@@ -1,4 +1,4 @@
---Stargazer Joker
+--Daydreamer
 SMODS.Joker {
     key= "daydreamer",
     atlas = "commons",
@@ -7,7 +7,7 @@ SMODS.Joker {
     unlocked = true,
     discovered = true,
     blueprint_compat = true,
-    cost = 3,
+    cost = 4,
     loc_txt = {
         name = "Daydreamer",
         text = {
@@ -37,6 +37,60 @@ SMODS.Joker {
             update_hand_text({sound = 'button', volume = 0.7, pitch = 1.1, delay = 0}, {handname=localize(context.scoring_name, 'poker_hands'),chips = G.GAME.hands[context.scoring_name].chips, mult = G.GAME.hands[context.scoring_name].mult, level=G.GAME.hands[context.scoring_name].level})
         end
 
+
+
+    end
+}
+
+--Sleepy Joker
+SMODS.Joker {
+    key= "sleepy_joker",
+    atlas = "commons",
+    pos = { x = 1, y = 0},
+    rarity = 1,
+    unlocked = true,
+    discovered = true,
+    blueprint_compat = true,
+    perishable_compat = false,
+    cost = 5,
+    loc_txt = {
+        name = "Sleepy Joker",
+        text = {
+            "Gains {C:chips}a tenth{} of the Chips",
+            "of every scoring card",
+            "Playing cards {C:red}don't{} give any Chips",
+            "{C:inactive}(Currently {}{C:chips}+#1#{}{C:inactive} Chips){}"
+        }
+    },
+    config = { extra = {chiptotal = 0} },
+    loc_vars = function(self, info_queue, card)
+            return { vars = { math.floor(card.ability.extra.chiptotal) } }
+        end,
+    calculate = function(self, card, context)
+        if context.individual and context.cardarea == G.play and not context.blueprint then
+            if context.other_card.edition and context.other_card.edition.foil == true then
+                -- hacky workaround so foil doesn't give chips, there's probably a better way to do this
+                local count = #find_joker("j_qui_sleepy_joker")
+                card.ability.extra.chiptotal = card.ability.extra.chiptotal + context.other_card.edition.chips/10
+                return  {
+                    message = {"ZZZ"},
+                    colour = G.C.RED,
+                    chips = -50,
+                    remove_default_message = true
+                }
+            else
+                return {
+                    message = {"ZZZ"},
+                    colour = G.C.RED
+                }
+            end
+        end
+
+        if context.joker_main then
+            return {
+                chips = math.floor(card.ability.extra.chiptotal),
+            }
+        end
 
 
     end

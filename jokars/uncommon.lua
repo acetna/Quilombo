@@ -1,98 +1,4 @@
--- Passe Partout
-SMODS.Joker {
-    key= "passe_partout",
-    atlas = "placeholder",
-    pos = { x = 0, y = 0},
-    rarity = 2,
-    unlocked = true,
-    discovered = true,
-    blueprint_compat = true,
-    cost = 5,
-    loc_txt = {
-        name = "Passe Partout",
-        text = {
 
-            "{X:mult,C:white}X#1#{} if every unscoring card",
-            "in a five card hand is", 
-            "the same suit" 
-
-        }
-    },
-    config = { extra = { Xmult = 3 , trigger = false} },
-    loc_vars = function(self, info_queue, card)
-            return { vars = { card.ability.extra.Xmult } }
-        end,
-    calculate = function(self, card, context)
-        if context.before and not context.blueprint then
-            local unscoringCard = {}
-            local suits = {
-                ["H"] = 0,
-                ["S"] = 0,
-                ["D"] = 0,
-                ["C"] = 0,
-                ["WC"] = 0
-            }
-            if #G.play.cards == 5 and #context.scoring_hand ~= 5 then
-                for i = 1, #G.play.cards do
-                    if existsInTable(G.play.cards[i],context.scoring_hand) then
-                    else
-                        unscoringCard[#unscoringCard + 1] = G.play.cards[i]
-                    end
-                end
-
-                for i = 1, #unscoringCard do
-                    if unscoringCard[i].ability.name == "Wild Card" then
-                        suits.WC = suits.WC + 1
-                    elseif unscoringCard[i]:is_suit("Hearts", true) then
-                        suits.H = suits.H + 1
-                    elseif unscoringCard[i]:is_suit("Spades", true) then
-                        suits.S = suits.S + 1
-                    elseif unscoringCard[i]:is_suit("Diamonds", true) then
-                        suits.D = suits.D + 1
-                    elseif unscoringCard[i]:is_suit("Clubs", true) then
-                        suits.C = suits.C + 1
-                    end
-                end
-
-                if #unscoringCard ~= 0 and 
-                    suits.H + suits.WC >= #unscoringCard or
-                    suits.S + suits.WC >= #unscoringCard or
-                    suits.D + suits.WC >= #unscoringCard or
-                    suits.C + suits.WC >= #unscoringCard
-                then
-                    card.ability.extra.trigger = true
-                end
-            end
-        end
-
-        if context.joker_main and card.ability.extra.trigger then
-            return {
-                Xmult_mod = card.ability.extra.Xmult,
-                message = localize { type = 'variable', key = 'a_xmult', vars = { card.ability.extra.Xmult } }
-              }
-        end
-
-        --this is just so blueprint plays nice with this card
-        if context.final_scoring_step then
-            card.ability.extra.trigger = false
-        end
-
-
-
-
-
-    end
-}
-
-function existsInTable(card, scored)
-    for k, v in ipairs(scored) do
-        if card == v then
-            -- scoring
-            return true
-        end
-    end
-    return false
-end
 
 -- Golden Idol
 SMODS.Joker {
@@ -139,27 +45,17 @@ SMODS.Joker {
     end
   }
 
-  function existsInTable(card, scored)
-    for k, v in ipairs(scored) do
-        if card == v then
-            -- scoring
-            return true
-        end
-    end
-    return false
-end
-
--- World Cracker
+-- World Cutter
 SMODS.Joker {
-    key= "world_cracker",
-    atlas = "placeholder",
-    pos = { x = 0, y = 0},
+    key= "world_cutter",
+    atlas = "uncommons",
+    pos = { x = 1, y = 0},
     rarity = 2,
     unlocked = true,
     discovered = true,
-    cost = 7,
+    cost = 6,
     loc_txt = {
-        name = "World Cracker",
+        name = "World Cutter",
         text = {
             "Lower the level of the first",
             "played {C:attention}poker hand{} each round",
@@ -182,3 +78,111 @@ SMODS.Joker {
   
     end
   }
+
+  --[[ Elegant Joker, formerly known as sports fan, formerly known as passe partout, commented out just because i'm struggling to flavor (and word) this card properly, and decided that it wasn't worth it for now at least
+  -- SHOULD be fully functional though, so you can uncomment this to play with a hidden joker!! ooooOOOOoooo secreeet
+SMODS.Joker {
+    key= "elegant_joker",
+    atlas = "placeholder",
+    pos = { x = 0, y = 0},
+    rarity = 2,
+    unlocked = true,
+    discovered = true,
+    blueprint_compat = true,
+    cost = 5,
+    loc_txt = {
+        name = "Elegant Joker",
+        text = {
+
+            "{X:mult,C:white}X#1#{} if every unscoring card",
+            "in a five card hand is", 
+            "the same suit",
+            "{C:inactive}(Must be at least two cards){}" 
+
+        }
+    },
+    config = { extra = { Xmult = 3 , trigger = false} },
+    loc_vars = function(self, info_queue, card)
+            return { vars = { card.ability.extra.Xmult } }
+        end,
+    calculate = function(self, card, context)
+        if context.before and not context.blueprint then
+            local unscoringCard = {}
+            local suits = {
+                ["H"] = 0,
+                ["S"] = 0,
+                ["D"] = 0,
+                ["C"] = 0,
+                ["WC"] = 0
+            }
+            if #G.play.cards == 5 and #context.scoring_hand ~= 5 then
+                for i = 1, #G.play.cards do
+                    if existsInTable(G.play.cards[i],context.scoring_hand) then
+                    else
+                        unscoringCard[#unscoringCard + 1] = G.play.cards[i]
+                    end
+                end
+
+                for i = 1, #unscoringCard do
+                    if unscoringCard[i].ability.name == "Wild Card" then
+                        suits.WC = suits.WC + 1
+                    elseif unscoringCard[i]:is_suit("Hearts", true) then
+                        suits.H = suits.H + 1
+                    elseif unscoringCard[i]:is_suit("Spades", true) then
+                        suits.S = suits.S + 1
+                    elseif unscoringCard[i]:is_suit("Diamonds", true) then
+                        suits.D = suits.D + 1
+                    elseif unscoringCard[i]:is_suit("Clubs", true) then
+                        suits.C = suits.C + 1
+                    end
+                end
+
+                if #unscoringCard > 1 and 
+                    suits.H + suits.WC >= #unscoringCard or
+                    suits.S + suits.WC >= #unscoringCard or
+                    suits.D + suits.WC >= #unscoringCard or
+                    suits.C + suits.WC >= #unscoringCard
+                then
+                    card.ability.extra.trigger = true
+                end
+            end
+        end
+
+        if context.joker_main and card.ability.extra.trigger then
+            return {
+                Xmult_mod = card.ability.extra.Xmult,
+                message = localize { type = 'variable', key = 'a_xmult', vars = { card.ability.extra.Xmult } }
+              }
+        end
+
+        --this is just so blueprint plays nice with this card
+        if context.final_scoring_step then
+            card.ability.extra.trigger = false
+        end
+
+
+
+
+
+    end
+}
+
+function existsInTable(card, scored)
+    for k, v in ipairs(scored) do
+        if card == v then
+            -- scoring
+            return true
+        end
+    end
+    return false
+end
+
+function existsInTable(card, scored)
+    for k, v in ipairs(scored) do
+        if card == v then
+            return true
+        end
+    end
+    return false
+end
+]]--
