@@ -8,3 +8,6 @@ I do plan to keep adding things to the mod over time, probably in bunches of lik
 
 # Additions
 7 whole Jokers!!
+
+# Name
+Quilombo is an argentinian spanish word meaning very disorganized/big mess
