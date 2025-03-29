@@ -9,7 +9,7 @@ I do plan to keep adding things to the mod over time, probably in bunches
 # Additions
 7 whole Jokers!!
 
-![image](https://github.com/user-attachments/assets/dc8740d0-cc63-472a-ade2-55a5affeab09)
+![image](https://github.com/user-attachments/assets/fbe5459a-b628-45d5-999b-5328ec3b06d8)
 <details>
     <summary>Spoiler warning!</summary>
   
